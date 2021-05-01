@@ -1,7 +1,7 @@
 Cucumber test system for FitNesse
 ==================================
 
-[![maven central](https://maven-badges.herokuapp.com/maven-central/org.fitnesse.cucumber/fitnesse-cucumber/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/org.fitnesse.cucumber/fitnesse-cucumber)
+[![maven central](https://maven-badges.herokuapp.com/maven-central/main.java.org.fitnesse.cucumber/fitnesse-cucumber/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/main.java.org.fitnesse.cucumber/fitnesse-cucumber)
 
 This project is a nice demonstration of the state of FitNesse and it's modularity. With fairly little code
 it's possible to define and run your Cucumber tests from FitNesse.
@@ -18,7 +18,7 @@ Features
  - Easily manage your BDD test cases in FitNesse.
  - Define a simple property to tell where your step definitions live:
 
-    !define cucumber.glue {org.fitnesse.cucumber}
+    !define cucumber.glue {main.java.org.fitnesse.cucumber}
 
  - Story files can be accessed directly from within FitNesse. This way you can make use of the reporting facilities of FitNesse.
 
@@ -36,4 +36,4 @@ Alternatively you can download the standalone jar and add it to a `plugins` fold
 The plugin will register itself with FitNesse automatically.
 
 [20150814]: http://fitnesse.org/.FrontPage.FitNesseDevelopment.FitNesseRelease20150814
-[Maven Central]: https://maven-badges.herokuapp.com/maven-central/org.fitnesse.cucumber/fitnesse-cucumber
+[Maven Central]: https://maven-badges.herokuapp.com/maven-central/main.java.org.fitnesse.cucumber/fitnesse-cucumber

@@ -3,13 +3,19 @@ package org.fitnesse.cucumber;
 import java.util.List;
 
 import fitnesse.util.StringUtils;
-import gherkin.formatter.Formatter;
-import gherkin.formatter.model.*;
+//import gherkin.formatter.Formatter;
+//import gherkin.formatter.model.*;
+import io.cucumber.core.gherkin.Feature;
+import io.cucumber.gherkin.Parser;
+import io.cucumber.gherkin.Token;
+import io.cucumber.java.Scenario;
+import io.cucumber.messages.Messages;
+import io.cucumber.plugin.event.Node;
 
 import static fitnesse.html.HtmlUtil.escapeHTML;
 import static java.lang.String.format;
 
-class FitNessePageFormatter implements Formatter {
+class FitNessePageFormatter implements Parser.Builder<Messages.GherkinDocument> {
 
     private final Printer outputPrinter;
 
@@ -22,12 +28,9 @@ class FitNessePageFormatter implements Formatter {
     }
 
     @Override
-    public void background(final Background background) {
-        write("h4", background);
-    }
-
-    @Override
-    public void syntaxError(final String state, final String event, final List<String> legalEvents, final String uri, final Integer line) {
+    public void syntaxError(final String state, final String event,
+                            final List<String> legalEvents, final String uri, final Integer line)
+    {
         write("syntaxError " + escapeHTML(state) + " " + escapeHTML(event) + "<br/>");
     }
 
@@ -37,17 +40,17 @@ class FitNessePageFormatter implements Formatter {
     }
 
     @Override
-    public void scenarioOutline(final ScenarioOutline scenarioOutline) {
+    public void scenarioOutline(final Node.ScenarioOutline scenarioOutline) {
         write("h4", scenarioOutline);
     }
 
     @Override
-    public void scenario(final Scenario scenario) {
+    public void scenario(final Messages.GherkinDocument.Feature.Scenario scenario) {
         write("h4", scenario);
     }
 
     @Override
-    public void examples(final Examples examples) {
+    public void examples(final Messages.GherkinDocument.Feature.Scenario.Examples examples) {
         write("<h4>Examples</h4><table>");
         for (ExamplesTableRow row : examples.getRows()) {
             write("<tr>");
@@ -94,5 +97,34 @@ class FitNessePageFormatter implements Formatter {
         if (!StringUtils.isBlank(statement.getDescription())) {
             write("<p style='white-space: pre-line'>" + escapeHTML(statement.getDescription()) + "</p>");
         }
+    }
+
+
+
+    /* ------------- */
+
+    @Override
+    public void build(Token token) {
+
+    }
+
+    @Override
+    public void startRule(Parser.RuleType ruleType) {
+
+    }
+
+    @Override
+    public void endRule(Parser.RuleType ruleType) {
+
+    }
+
+    @Override
+    public Messages.GherkinDocument getResult() {
+        return null;
+    }
+
+    @Override
+    public void reset() {
+
     }
 }

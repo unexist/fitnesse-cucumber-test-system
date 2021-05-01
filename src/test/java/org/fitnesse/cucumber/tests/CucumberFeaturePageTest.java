@@ -1,12 +1,12 @@
-package org.fitnesse.cucumber;
-
-import java.io.File;
-import org.junit.Test;
+package org.fitnesse.cucumber.tests;
 
 import fitnesse.wiki.WikiPage;
+import org.fitnesse.cucumber.CucumberFeaturePage;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
+import org.junit.Test;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertThat;
+import java.io.File;
 
 public class CucumberFeaturePageTest {
 
@@ -14,6 +14,6 @@ public class CucumberFeaturePageTest {
     public void scenarioNamesShouldBeRenderedAsHeaders() {
         WikiPage storyPage = new CucumberFeaturePage(new File("features/simplefeature.feature"), "simplefeature", null);
         String html = storyPage.getHtml();
-        assertThat(html, containsString("<h4>Scenario: 2 squared</h4>"));
+        Assert.assertThat(html, Matchers.containsString("<h4>Scenario: 2 squared</h4>"));
     }
 }

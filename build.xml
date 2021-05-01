@@ -59,7 +59,7 @@
         <jar jarfile="${dist.dir}/fitnesse-cucumber.jar" basedir="${classes.dir}">
             <include name="**" />
             <service type="fitnesse.plugins.PluginFeatureFactory"
-                     provider="org.fitnesse.cucumber.Plugin"/>
+                     provider="main.java.org.fitnesse.cucumber.Plugin"/>
         </jar>
     </target>
 
@@ -93,17 +93,17 @@
 
     <target name="compile" depends="resolve" description="compile the source (make)">
         <mkdir dir="${classes.dir}" />
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" debug="true" source="1.7" target="1.7" includeantruntime="false" />
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" debug="true" source="11" target="11" includeantruntime="false" />
     </target>
 
     <target name="steps-compile" depends="compile" description="compile the source (make)">
         <mkdir dir="${steps.classes.dir}" />
-        <javac srcdir="${steps.src.dir}" destdir="${steps.classes.dir}" classpathref="classpath" debug="true" source="1.7" target="1.7" includeantruntime="false" />
+        <javac srcdir="${steps.src.dir}" destdir="${steps.classes.dir}" classpathref="classpath" debug="true" source="11" target="11" includeantruntime="false" />
     </target>
 
     <target name="test-compile" depends="compile,steps-compile" description="compile the source (make)">
         <mkdir dir="${test.classes.dir}" />
-        <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" classpathref="test.classpath" debug="true" source="1.7" target="1.7" includeantruntime="false" />
+        <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" classpathref="test.classpath" debug="true" source="11" target="11" includeantruntime="false" />
     </target>
 
     <target name="clean" description="delete everything in the classes directory">

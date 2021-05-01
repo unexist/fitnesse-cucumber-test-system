@@ -1,22 +1,33 @@
 package org.fitnesse.cucumber;
 
-import java.io.*;
-import java.util.*;
-
-import cucumber.runtime.*;
-import cucumber.runtime.Runtime;
+/*import cucumber.runtime.*;
 import cucumber.runtime.io.MultiLoader;
 import cucumber.runtime.io.Resource;
 import cucumber.runtime.io.ResourceLoader;
 import cucumber.runtime.io.ResourceLoaderClassFinder;
-import cucumber.runtime.model.CucumberFeature;
+import cucumber.runtime.model.CucumberFeature;*/
 import fitnesse.testrunner.WikiTestPage;
-import fitnesse.testsystems.*;
+import fitnesse.testsystems.CompositeTestSystemListener;
+import fitnesse.testsystems.ExecutionLogListener;
+import fitnesse.testsystems.ExecutionResult;
+import fitnesse.testsystems.TestPage;
+import fitnesse.testsystems.TestSummary;
+import fitnesse.testsystems.TestSystem;
+import fitnesse.testsystems.TestSystemListener;
 import fitnesse.wiki.WikiPage;
 import fitnesse.wiki.fs.FileSystemPage;
+import io.cucumber.core.options.RuntimeOptions;
+import io.cucumber.core.resource.Resource;
 import util.FileUtil;
 
-import static java.lang.String.format;
+import java.io.ByteArrayInputStream;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>Cucumber test system.</p>
@@ -47,7 +58,6 @@ public class CucumberTestSystem implements TestSystem {
 
     @Override
     public void start() {
-
         started = true;
 
         testSystemListener.testSystemStarted(this);
@@ -75,12 +85,10 @@ public class CucumberTestSystem implements TestSystem {
 
         final FitNesseResultFormatter formatter = new FitNesseResultFormatter(testSummary,
                 new Printer() {
-                    @Override
                     public void write(final String text) {
                         testOutputChunk(text);
                     }
                 }, new Printer() {
-                    @Override
                     public void write(final String text) {
                         executionLogListener.stdErr(text);
                     }
@@ -91,7 +99,7 @@ public class CucumberTestSystem implements TestSystem {
         try {
             Thread.currentThread().setContextClassLoader(classLoader);
 
-            RuntimeOptions runtimeOptions = new RuntimeOptions(Arrays.asList("--glue", gluePath));
+            /*RuntimeOptions runtimeOptions = new RuntimeOptions(Arrays.asList("--glue", gluePath));
 
             final List<CucumberFeature> cucumberFeatures = new ArrayList<>();
             final List<Object> filters = new ArrayList<>();
@@ -106,10 +114,11 @@ public class CucumberTestSystem implements TestSystem {
                 cucumberFeature.run(formatter, formatter, runtime);
             }
 
-            formatter.missing(runtime.getSnippets());
-        } catch (CucumberException e) {
+            formatter.missing(runtime.getSnippets());*/
+        } catch (Exception e) {
             testSummary.add(ExecutionResult.ERROR);
-            testSystemListener.testOutputChunk("<span class='error'>Test execution failed: " + (e.getCause() != null ? e.getCause().getMessage() : e.getMessage()) + "</span>");
+            testSystemListener.testOutputChunk("<span class='error'>Test execution failed: " +
+                    (e.getCause() != null ? e.getCause().getMessage() : e.getMessage()) + "</span>");
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassLoader);
             testSystemListener.testComplete(testPage, testSummary);
@@ -147,26 +156,13 @@ public class CucumberTestSystem implements TestSystem {
             this.testPage = testPage;
         }
 
-        @Override
-        public String getPath() {
-            return "fitnesse";
-        }
-
-        @Override
-        public String getAbsolutePath() {
-            return "fitnesse";
+        public URI getUri() {
+            return null;
         }
 
         @Override
         public InputStream getInputStream() throws IOException {
             return new ByteArrayInputStream(testPage.getContent().getBytes());
         }
-
-        @Override
-        public String getClassName(final String extension) {
-            return "fitnesse";
-        }
     }
-
-
 }

@@ -1,17 +1,30 @@
 package org.fitnesse.cucumber;
 
+import fitnesse.testrunner.WikiPageIdentity;
+import fitnesse.wiki.PageCrawler;
+import fitnesse.wiki.PageData;
+import fitnesse.wiki.PageType;
+import fitnesse.wiki.VersionInfo;
+import fitnesse.wiki.WikiPage;
+import fitnesse.wiki.WikiPagePath;
+import fitnesse.wiki.fs.WikiPageProperties;
+import io.cucumber.core.gherkin.Feature;
+import io.cucumber.gherkin.Gherkin;
+import io.cucumber.gherkin.Parser;
+import io.cucumber.messages.IdGenerator;
+import io.cucumber.messages.Messages;
+import org.apache.commons.lang3.NotImplementedException;
+import util.FileUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import org.apache.commons.lang.NotImplementedException;
-
-import fitnesse.testrunner.WikiPageIdentity;
-import fitnesse.wiki.*;
-import gherkin.parser.ParseError;
-import util.FileUtil;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
+import static io.cucumber.gherkin.Gherkin.makeSourceEnvelope;
+import static java.util.Collections.singletonList;
 
 public class CucumberFeaturePage implements WikiPage {
     private final File path;
@@ -95,14 +108,32 @@ public class CucumberFeaturePage implements WikiPage {
     @Override
     public String getHtml() {
         final StringBuilder buffer = new StringBuilder();
+
         try {
-            new gherkin.parser.Parser(new FitNessePageFormatter(new Printer() {
+            final IdGenerator idGenerator = new IdGenerator.Incrementing();
+
+            Messages.Envelope envelope = makeSourceEnvelope(readContent(), path.getName());
+            List<Messages.Envelope> envelopes = Gherkin.fromSources(singletonList(envelope),
+                    false, true, false, idGenerator)
+                    .collect(Collectors.toList());
+
+            Messages.GherkinDocument gherkinDocument = envelopes.get(0).getGherkinDocument();
+
+        /*
+            FitNessePageFormatter fnpf =  new main.java.org.fitnesse.cucumber.FitNessePageFormatter(new Printer() {
                 @Override
                 public void write(final String text) {
                     buffer.append(text);
                 }
-            })).parse(readContent(), "", 0);
-        } catch (ParseError e) {
+            });
+
+            Parser<FitNessePageFormatter> parser = new Parser<FitNessePageFormatter>(new Parser.Builder<FitNessePageFormatter>() {
+            }
+
+
+            new Parser<FitNessePageFormatter>().parse(readContent(), "", 0);
+            */
+        } catch (Exception e) {
             buffer.append("<span class=\"error\">Parse error in Cucumber page: " + e.getMessage() + "</span><br/><br/>");
             buffer.append(readContent().replace("\n", "<br/>"));
         }
@@ -127,7 +158,7 @@ public class CucumberFeaturePage implements WikiPage {
 
     @Override
     public PageCrawler getPageCrawler() {
-        return new PageCrawlerImpl(this);
+        return new PageCrawler(this);
     }
 
     @Override

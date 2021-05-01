@@ -2,7 +2,7 @@ package org.fitnesse.cucumber;
 
 import fitnesse.wiki.WikiPage;
 import fitnesse.wiki.WikiPageFactory;
-import fitnesse.wikitext.parser.VariableSource;
+import fitnesse.wikitext.VariableSource;
 
 import java.io.File;
 

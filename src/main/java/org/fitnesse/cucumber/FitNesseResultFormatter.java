@@ -1,15 +1,16 @@
 package org.fitnesse.cucumber;
 
-import java.util.ArrayDeque;
-import java.util.List;
-import java.util.Queue;
-
 import fitnesse.testsystems.ExecutionResult;
 import fitnesse.testsystems.TestSummary;
 import fitnesse.util.StringUtils;
-import gherkin.formatter.Formatter;
+import io.cucumber.core.gherkin.formatter.Formatter;
 import gherkin.formatter.Reporter;
 import gherkin.formatter.model.*;
+import io.cucumber.core.gherkin.Step;
+
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.Queue;
 
 import static fitnesse.html.HtmlUtil.escapeHTML;
 import static java.lang.String.format;

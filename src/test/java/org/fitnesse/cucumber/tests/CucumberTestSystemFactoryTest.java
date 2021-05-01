@@ -1,28 +1,27 @@
-package org.fitnesse.cucumber;
+package org.fitnesse.cucumber.tests;
 
 import fitnesse.testsystems.ClassPath;
 import fitnesse.testsystems.Descriptor;
 import fitnesse.testsystems.TestSystem;
+import org.fitnesse.cucumber.CucumberTestSystemFactory;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.Arrays;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class CucumberTestSystemFactoryTest {
 
     @Test
     public void factoryReturnsRunningTestSystemInstance() throws IOException {
         CucumberTestSystemFactory factory = new CucumberTestSystemFactory();
-        Descriptor descriptor = mock(Descriptor.class);
-        when(descriptor.getClassPath()).thenReturn(new ClassPath(Arrays.asList("classes"), ":"));
+        Descriptor descriptor = Mockito.mock(Descriptor.class);
+        Mockito.when(descriptor.getClassPath()).thenReturn(new ClassPath(Arrays.asList("classes"), ":"));
 
         TestSystem testSystem = factory.create(descriptor);
 
-        assertThat(testSystem.isSuccessfullyStarted(), is(false));
+        Assert.assertThat(testSystem.isSuccessfullyStarted(), CoreMatchers.is(false));
     }
 }

@@ -5,18 +5,42 @@ FitNesseRoot/TemplateLibrary/
 FitNesseRoot/properties
 FitNesseRoot/files/testResults
 FitNesseRoot/files/testProgress
-antlib/
-classes/
-steps-classes/
-test-classes/
-test-results/
-lib/
-dist/
-javadoc/
-fitnesse-cucumber-test-system.iml
-fitnesse-cucumber-test-system.ipr
-fitnesse-cucumber-test-system.iws
-*.zip
 FitNesseRoot/CucumberClassPath
-dependencies
-out
+*.zip
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# OSX
+.DS_Store
+
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties

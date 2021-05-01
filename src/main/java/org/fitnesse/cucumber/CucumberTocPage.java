@@ -1,12 +1,18 @@
 package org.fitnesse.cucumber;
 
-import fitnesse.wiki.*;
-import fitnesse.wikitext.parser.VariableSource;
+import fitnesse.wiki.BaseWikitextPage;
+import fitnesse.wiki.PageData;
+import fitnesse.wiki.PageType;
+import fitnesse.wiki.VersionInfo;
+import fitnesse.wiki.WikiPage;
+import fitnesse.wiki.fs.WikiPageProperties;
+import fitnesse.wikitext.VariableSource;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class CucumberTocPage extends BaseWikitextPage {
     private static final String CONTENTS = "!contents";
@@ -18,7 +24,6 @@ public class CucumberTocPage extends BaseWikitextPage {
         this.path = path;
     }
 
-    @Override
     public WikiPage addChildPage(String name) {
         return null;
     }
@@ -40,13 +45,12 @@ public class CucumberTocPage extends BaseWikitextPage {
 
     @Override
     public void removeChildPage(String name) {
-
     }
 
     @Override
     public List<WikiPage> getChildren() {
         List<WikiPage> children = new ArrayList<WikiPage>();
-        for (String child : path.list()) {
+        for (String child : Objects.requireNonNull(path.list())) {
             File childPath = new File(path, child);
             if (CucumberPageFactory.isFeatureFile(childPath)) {
                 children.add(new CucumberFeaturePage(childPath,
@@ -84,5 +88,4 @@ public class CucumberTocPage extends BaseWikitextPage {
     public VersionInfo commit(PageData data) {
         return null;
     }
-
 }

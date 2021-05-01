@@ -1,10 +1,10 @@
-package org.fitnesse.cucumber;
+package org.fitnesse.cucumber.steps;
 
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class ExampleSteps {
     int x;
@@ -46,5 +46,4 @@ public class ExampleSteps {
         if (value != x)
             throw new AssertionError("x is " + x + ", but should be " + value);
     }
-
 }
